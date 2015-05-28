@@ -7,12 +7,22 @@ myLength :: Num a => [t] -> a
 myLength (x:xs) = 1 + myLength xs
 myLength [] = 0
 
+-- or (and this is a bit silly)
+
+myLength2 :: Num a => [t] -> a
+myLength2 [] = 0
+myLength2 inList = sum $ map (\x -> 1) inList
+
+-- slower too! lulz
+
 -- 3 average of a list
 
 listAverage :: Fractional a => [a] -> a
 listAverage [] = 0
 listAverage list = sum list / myLength list
 
+-- more silliness
+listAverage list = (foldl (+) 0 list) / (sum $ map (\x -> 1) list)
 
 -- 4 palindrome a list
 
@@ -35,6 +45,7 @@ palindromeCheck list
 
 -- 6 sort a list of lists by length of sublists
 -- we're going to write a shitty quick sort real quick
+-- or not!
 
 listOfLists = [[1..4],[2..6],[1,3,4],[2..10]]
 
@@ -46,6 +57,8 @@ sortListOfLists list = sortBy (comparing length) list
 myintersperse :: a -> [[a]] -> [a]
 myintersperse _ [] = []
 myintersperse x (y:ys) = y ++ [x] ++ myintersperse x ys
+
+example = [[1..3],[3..4],[45..342]]
 
 -- 8 find height of a binary tree, using the tree type we defined earlier
 
@@ -66,9 +79,9 @@ type X = Float
 type Y = Float
 type Point = (X,Y)
 
-findDirection :: (Point a, Direction d) => a -> a -> a -> d
-findDirection a b c
-    | (crossProduct a b c) > 0 = LeftTurn
-    | (crossProduct a b c) < 0 = RightTurn
-    | (crossProduct a b c) == 0 = Straight
-    where crossProduct (x1,y1) (x2,y2) (x3,y3) = ((x2-x1)*(y3-y1)) - ((x3-y1)*(y2-y1))
+-- findDirection :: (Point a, Direction d) => a -> a -> a -> d
+-- findDirection a b c
+--     | (crossProduct a b c) > 0 = LeftTurn
+--     | (crossProduct a b c) < 0 = RightTurn
+--     | (crossProduct a b c) == 0 = Straight
+--     where crossProduct (x1,y1) (x2,y2) (x3,y3) = ((x2-x1)*(y3-y1)) - ((x3-y1)*(y2-y1))
